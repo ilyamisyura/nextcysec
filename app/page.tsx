@@ -5,23 +5,8 @@ import {
   MousePointerClick,
   Search,
   ShieldCheck,
-  Maximize2,
-  Minimize2,
-  RotateCw,
   Printer,
 } from "lucide-react";
-
-/**
- * Next/React single-file demo for A5 table-stand artifacts
- * - Uses Tailwind (v4-compatible utility classes)
- * - Beautiful, responsive cards with fixed Process Strip
- * - Now supports: Topic & Version selectors
- *
- * How to use in Next.js (app router):
- * 1) Create `app/page.tsx` and paste this entire file there.
- * 2) Ensure Tailwind is set up; no custom plugin required. (Tailwind v3+ works too.)
- * 3) Run the dev server and adjust CATALOG as needed.
- */
 
 /**
  * -----------------------------
@@ -83,34 +68,86 @@ const CATALOG: Topic[] = [
         badges: ["email", "web", "password"],
         language: "de-CH",
       },
+    ],
+  },
+  {
+    id: "business_email_compromise",
+    name: "Rechnungsmanipulationsbetrug (BEC-Betrug)",
+    items: [
       {
-        hook: "Rechnung? Erst prüfen, dann zahlen.",
+        hook: "Chef-Mail? Kurz zurückrufen.",
         scenario:
-          "Sie bekommen eine E-Mail mit «dringender» Zahlungsaufforderung und einem Link zur angeblichen Rechnungsfreigabe.",
-        demand: ["Geldüberweisung", "Kreditkartendaten", "Freigabe von Zahlungen"],
+          "Sie erhalten eine eilige Zahlungsanweisung «vom Chef» aus dem Ausland.",
+        demand: ["Geld", "Zugangsdaten (E-Mail)", "Vertrauliche Daten"],
         actions: [
-          "Auf Zahlungs-Link klicken",
-          "Kartendaten eingeben",
-          "Freigabe ohne Rückfrage erteilen",
+          "Zahlung per E-Mail-Anweisung freigeben",
+          "Prozesse umgehen (keine Vier Augen)",
+          "Nur per E-Mail kommunizieren",
         ],
         detection: [
-          "Ungewöhnlicher Zeitdruck («heute noch zahlen»)",
-          "Absender oder Link-Domäne wirken ungewohnt",
-          "Bitte, Daten über E-Mail/Link einzugeben",
+          "Druck auf Tempo/Geheimhaltung «vom Chef»",
+          "Neue Bankdaten/IBAN-Wechsel",
+          "Absenderadresse minimal abweichend",
         ],
         measures: [
-          "Zahlungen nur über den bekannten Prozess (z. B. Vier-Augen-Prinzip) freigeben",
-          "URL selbst eintippen; keine Links aus E-Mails verwenden",
-          "Unsicher? Sofort intern melden; keine Daten preisgeben",
+          "Immer telefonisch verifizieren (eigene Kontaktliste nutzen)",
+          "Prozesse strikt einhalten: Vier-Augen-Prinzip/Unterschrift zu zweien",
+          "Schon gezahlt? Sofort Bank & Kantonspolizei; intern melden",
+        ],
+        area_tag: "everyone",
+        badges: ["email", "ceo", "payment", "iban", "urgency"],
+        language: "de-CH",
+      },
+      {
+        hook: "Neue IBAN? Erst verifizieren.",
+        scenario:
+          "Sie erhalten eine Rechnung erneut – diesmal mit geänderter IBAN.",
+        demand: ["Geld", "Zugangsdaten (E-Mail)", "Vertrauliche Daten"],
+        actions: [
+          "Geänderte IBAN in die Zahlung übernehmen",
+          "Zahlung ohne Rückruf freigeben",
+          "Ungeprüft an die Buchhaltung weiterleiten",
+        ],
+        detection: [
+          "Rechnung kommt nochmals – mit neuer IBAN",
+          "Bitte: «künftige Zahlungen auf anderes Konto»",
+          "Absenderadresse oder Signatur wirkt leicht anders",
+        ],
+        measures: [
+          "Rückruf an bekannte Nummer – erst dann zahlen",
+          "Vier-Augen-Prinzip / Unterschrift zu zweien einhalten",
+          "Schon gezahlt? Sofort Bank & Kantonspolizei; Absender informieren; Passwort ändern & Weiterleitungen prüfen",
         ],
         area_tag: "accounting",
-        badges: ["email", "payments", "web"],
+        badges: ["email", "invoice", "payment", "iban"],
+        language: "de-CH",
+      },
+      {
+        hook: "Rechnung? Erst verifizieren.",
+        scenario:
+          "Sie erhalten eine «dringende» Zahlungsaufforderung mit Hinweis auf neue Zahlungsabwicklung/Bankdaten.",
+        demand: ["Geld", "Zugangsdaten (E-Mail)", "Vertrauliche Daten"],
+        actions: [
+          "Neue Bankdaten ungeprüft übernehmen",
+          "Ohne Rücksprache freigeben",
+          "Interne Freigabeprozesse umgehen",
+        ],
+        detection: [
+          "Ungewöhnliche Zahlungsaufforderung",
+          "Hinweis: «künftige Zahlungen auf anderes Konto»",
+          "Bezug auf laufende Konversation – Details plötzlich geändert",
+        ],
+        measures: [
+          "Telefonisch rückfragen (nicht über die E-Mail-Kette)",
+          "Firmenprozess einhalten: Vier-Augen/Unterschrift zu zweien",
+          "Schon gezahlt oder kompromittiert? Bank & Kantonspolizei; Passwort ändern, Filter/Weiterleitungen prüfen",
+        ],
+        area_tag: "accounting",
+        badges: ["email", "invoice", "payment", "iban"],
         language: "de-CH",
       },
     ],
   },
-  // Example placeholder topic (add your real items later)
-  { id: "smishing", name: "Smishing (SMS)", items: [] },
   { id: "vishing", name: "Vishing (Telefon)", items: [] },
   { id: "quishing", name: "QR-Code-Fallen", items: [] },
   { id: "passwords", name: "Passwörter & 2FA", items: [] },
@@ -163,7 +200,9 @@ function Pill({ children }: { children: React.ReactNode }) {
 
 /** Small divider */
 function Dot() {
-  return <span className="mx-1 inline-block h-1 w-1 rounded-full bg-zinc-400 align-middle" />;
+  return (
+    <span className="mx-1 inline-block h-1 w-1 rounded-full bg-zinc-400 align-middle" />
+  );
 }
 
 /** A5 aspect box */
@@ -205,17 +244,17 @@ function TableStandCard({
         {/* Header */}
         <header className="flex items-start gap-3 border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-700/70">
           <div className="flex-1">
-            <div className="text-[0.7rem] uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-              A5 Table-Stand · Version {index + 1} · {data.language}
+            <div className="mb-2 text-[0.7rem] uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              Version {index + 1} · {data.language}
             </div>
             <h1 className="text-balance text-2xl font-semibold leading-snug text-zinc-900 dark:text-zinc-50">
               {data.hook}
             </h1>
-            <p className="mt-1 text-pretty text-sm text-zinc-600 dark:text-zinc-300">
+            <p className="mt-1 text-pretty text-md text-zinc-600 dark:text-zinc-300">
               {data.scenario}
             </p>
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-1">
+          <div className="flex shrink-0 flex-col items-end gap-2">
             <Pill>{data.area_tag}</Pill>
             <div className="flex flex-wrap items-center gap-1.5">
               {data.badges.map((b) => (
@@ -226,7 +265,9 @@ function TableStandCard({
         </header>
 
         {/* Process Strip */}
-        <section className={cx("grid flex-1 grid-cols-1 gap-3 px-5 py-4", grid)}>
+        <section
+          className={cx("grid flex-1 grid-cols-1 gap-3 px-5 py-4", grid)}
+        >
           {PROCESS.map(({ key, title, icon: Icon, accent }) => (
             <div
               key={key}
@@ -234,10 +275,17 @@ function TableStandCard({
             >
               <div className="pointer-events-none absolute -inset-px -z-10 rounded-2xl opacity-0 ring-1 ring-black/5 transition-opacity group-hover:opacity-100" />
               <div className="mb-2 flex items-center gap-2">
-                <div className={cx("grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br text-white shadow-sm", accent)}>
+                <div
+                  className={cx(
+                    "grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br text-white shadow-sm",
+                    accent
+                  )}
+                >
                   <Icon className="h-4 w-4" />
                 </div>
-                <h2 className="text-md font-semibold text-zinc-900 dark:text-zinc-100">{title}</h2>
+                <h2 className="text-md font-semibold text-zinc-900 dark:text-zinc-100">
+                  {title}
+                </h2>
               </div>
               <ul className="ml-1 space-y-1.5 text-md text-zinc-700 dark:text-zinc-300">
                 {data[key].slice(0, 3).map((item, i) => (
@@ -253,11 +301,6 @@ function TableStandCard({
 
         {/* Footer */}
         <footer className="mt-auto flex items-center justify-between gap-2 border-t border-zinc-200/70 px-5 py-3 text-xs text-zinc-500 dark:border-zinc-700/70 dark:text-zinc-400">
-          <div className="flex items-center gap-2">
-            <span>Prozess: Druck → Neugier → Geld → Zugang</span>
-            <Dot />
-            <span>Immer gleiche Reihenfolge & Icons</span>
-          </div>
           <div className="flex items-center gap-2">
             <span>Drucken oder als PDF sichern</span>
           </div>
@@ -285,7 +328,7 @@ function Controls({
   const versions = topic?.items ?? [];
 
   return (
-    <div className="sticky top-0 z-10 -mx-4 mb-6 rounded-2xl border border-zinc-200/80 bg-white/80 p-3 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-900/80">
+    <div className="top-0 z-10 mb-6 rounded-2xl border border-zinc-200/80 bg-white/80 p-3 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-900/80">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3">
           {/* Topic select */}
@@ -294,11 +337,16 @@ function Controls({
             <select
               value={topicId}
               onChange={(e) => setTopicId(e.target.value)}
-              className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+              className="w-48 rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
             >
               {topics.map((t) => (
-                <option key={t.id} value={t.id} disabled={(t.items?.length ?? 0) === 0}>
-                  {t.name}{(t.items?.length ?? 0) === 0 ? " (leer)" : ""}
+                <option
+                  key={t.id}
+                  value={t.id}
+                  disabled={(t.items?.length ?? 0) === 0}
+                >
+                  {t.name}
+                  {(t.items?.length ?? 0) === 0 ? " (leer)" : ""}
                 </option>
               ))}
             </select>
@@ -310,11 +358,12 @@ function Controls({
             <select
               value={versionIdx}
               onChange={(e) => setVersionIdx(Number(e.target.value))}
-              className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+              className="w-52 rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
             >
               {versions.map((v, i) => (
                 <option key={i} value={i}>
-                  V{i + 1} — {v.hook.length > 36 ? v.hook.slice(0, 33) + "…" : v.hook}
+                  V{i + 1} —{" "}
+                  {v.hook.length > 36 ? v.hook.slice(0, 33) + "…" : v.hook}
                 </option>
               ))}
             </select>
@@ -323,7 +372,10 @@ function Controls({
           {/* Format placeholder (future) */}
           <label className="flex items-center gap-2 text-sm opacity-60">
             <span className="text-zinc-600 dark:text-zinc-300">Format</span>
-            <select disabled className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100">
+            <select
+              disabled
+              className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+            >
               <option>Hochformat (A5)</option>
               <option>— weitere folgen —</option>
             </select>
@@ -354,7 +406,10 @@ export default function TableStandApp() {
   // Keep only one view for now (Hochformat).
   const orientation: "portrait" | "landscape" = "portrait";
 
-  const topic = useMemo(() => CATALOG.find((t) => t.id === topicId)!, [topicId]);
+  const topic = useMemo(
+    () => CATALOG.find((t) => t.id === topicId)!,
+    [topicId]
+  );
   const current = useMemo(() => topic.items[versionIdx], [topic, versionIdx]);
 
   // Reset version when switching topic
@@ -364,7 +419,9 @@ export default function TableStandApp() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <h1 className="mb-2 text-3xl font-semibold tracking-tight">A5 Table-Stands · Cyber Awareness</h1>
+      <h1 className="mb-4 text-3xl font-semibold tracking-tight">
+        A5 Table-Stands · Cyber Awareness
+      </h1>
 
       <Controls
         topics={CATALOG}
@@ -376,11 +433,16 @@ export default function TableStandApp() {
 
       {current ? (
         <div className="grid gap-6 md:grid-cols-1">
-          <TableStandCard data={current} orientation={orientation} index={versionIdx} />
+          <TableStandCard
+            data={current}
+            orientation={orientation}
+            index={versionIdx}
+          />
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-zinc-300 p-6 text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">
-          Für dieses Thema sind noch keine Versionen hinterlegt. Fügen Sie Einträge in <code>CATALOG</code> hinzu.
+          Für dieses Thema sind noch keine Versionen hinterlegt. Fügen Sie
+          Einträge in <code>CATALOG</code> hinzu.
         </div>
       )}
 
