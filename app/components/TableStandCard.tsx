@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import type { Artifact } from "../types";
+import type { Artifact, Detail } from "../types";
 import { cx } from "../lib/cx";
 import { PROCESS } from "../lib/process";
 import A5Frame from "./A5Frame";
@@ -67,10 +67,19 @@ export default function TableStandCard({
                 </h2>
               </div>
               <ul className="ml-1 space-y-1.5 text-md text-zinc-700 dark:text-zinc-300">
-                {data[key].slice(0, 3).map((item, i) => (
+                {(data[key] as Detail[]).slice(0, 3).map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-400/70" />
-                    <span className="text-pretty leading-relaxed">{item}</span>
+                    <div className="flex-1">
+                      <div className="text-pretty leading-relaxed font-medium">
+                        {item.title}
+                      </div>
+                      {item.description ? (
+                        <div className="mt-0.5 text-sm text-zinc-600 dark:text-zinc-400">
+                          {item.description}
+                        </div>
+                      ) : null}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -88,4 +97,3 @@ export default function TableStandCard({
     </A5Frame>
   );
 }
-
