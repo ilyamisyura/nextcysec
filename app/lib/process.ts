@@ -9,7 +9,7 @@ export const PROCESS = [
   },
   {
     key: "actions" as const,
-    title: "So greifen Sie an …",
+    title: "Diese Schritte vermeiden …",
     icon: MousePointerClick,
     accent: "from-amber-500 to-yellow-500",
   },
