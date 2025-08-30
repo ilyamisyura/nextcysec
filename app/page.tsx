@@ -12,6 +12,7 @@ export default function TableStandApp() {
   // Defaults
   const [topicId, setTopicId] = useState(CATALOG[0].id);
   const [versionIdx, setVersionIdx] = useState(0);
+  const [mode, setMode] = useState<"full" | "detect">("full");
 
   // Keep only one view for now (Hochformat).
   const orientation: "portrait" | "landscape" = "portrait";
@@ -39,6 +40,8 @@ export default function TableStandApp() {
         setTopicId={setTopicId}
         versionIdx={versionIdx}
         setVersionIdx={setVersionIdx}
+        mode={mode}
+        setMode={setMode}
       />
 
       {current ? (
@@ -47,6 +50,7 @@ export default function TableStandApp() {
             data={current}
             orientation={orientation}
             index={versionIdx}
+            mode={mode}
           />
         </div>
       ) : (
