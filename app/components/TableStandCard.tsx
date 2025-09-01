@@ -15,17 +15,17 @@ export default function TableStandCard({
   data: Artifact;
   orientation: "portrait" | "landscape";
   index: number;
-  mode?: "full" | "detect";
+  mode?: "full" | "detection" | "measures";
 }) {
   const baseGrid = orientation === "portrait" ? "md:grid-cols-2" : "md:grid-cols-4";
-  const grid = mode === "detect" ? "md:grid-cols-3" : baseGrid;
+  const grid = mode === "full" ? baseGrid : "md:grid-cols-3";
 
   return (
     <A5Frame orientation={orientation}>
       <div className="flex h-full w-full flex-col">
         {/* Header */}
-        <header className="flex items-start gap-3 border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-700/70">
-          <div className="flex-1">
+        <header className="flex flex-col lg:flex-row items-start gap-3 border-b border-zinc-200/70 px-5 py-4 dark:border-zinc-700/70">
+          <div className="flex-1 order-2 lg:order-1 w-full">
             <div className="mb-2 text-[0.7rem] uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
               Version {index + 1} · {data.language}
             </div>
@@ -36,9 +36,9 @@ export default function TableStandCard({
               {data.scenario}
             </p>
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-2">
-            <Pill>{data.area_tag}</Pill>
+          <div className="flex w-full lg:w-auto shrink-0 flex-col items-start lg:items-end gap-2 order-1 lg:order-2">
             <div className="flex flex-wrap items-center gap-1.5">
+              <Pill accent>{data.area_tag}</Pill>
               {data.badges.map((b) => (
                 <Pill key={b}>{b}</Pill>
               ))}
@@ -46,7 +46,7 @@ export default function TableStandCard({
           </div>
         </header>
 
-        {/* Process Strip / Detect-only view */}
+        {/* Process Strip / Detect-/Measures-only view */}
         <section className={cx("grid flex-1 grid-cols-1 gap-3 px-5 py-4", grid)}>
           {mode === "full"
             ? PROCESS.map(({ key, title, icon: Icon, accent }) => (
@@ -87,8 +87,11 @@ export default function TableStandCard({
                   </ul>
                 </div>
               ))
-            : // Detect-only mode: show each detection item as its own card
-              (data["detection"] as Detail[]).map((item, i) => (
+            : // Detect- or Measures-only mode: show each item as its own card
+              ((mode === "detection"
+                ? (data["detection"] as Detail[])
+                : (data["measures"] as Detail[])
+              )).map((item, i) => (
                 <div
                   key={i}
                   className="group relative flex flex-col rounded-2xl border border-zinc-200/70 bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700/70 dark:bg-zinc-950"

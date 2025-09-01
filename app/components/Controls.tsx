@@ -17,8 +17,8 @@ export default function Controls({
   setTopicId: (id: string) => void;
   versionIdx: number;
   setVersionIdx: (i: number) => void;
-  mode: "full" | "detect";
-  setMode: (m: "full" | "detect") => void;
+  mode: "full" | "detection" | "measures";
+  setMode: (m: "full" | "detection" | "measures") => void;
 }) {
   const topic = topics.find((t) => t.id === topicId);
   const versions = topic?.items ?? [];
@@ -70,11 +70,12 @@ export default function Controls({
             <span className="text-zinc-600 dark:text-zinc-300">Ansicht</span>
             <select
               value={mode}
-              onChange={(e) => setMode(e.target.value as "full" | "detect")}
+              onChange={(e) => setMode(e.target.value as "full" | "detection" | "measures")}
               className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
             >
               <option value="full">Gesamt</option>
-              <option value="detect">Erkennen</option>
+              <option value="detection">Erkennen</option>
+              <option value="measures">Schritte</option>
             </select>
           </label>
 

@@ -110,7 +110,7 @@ export const CATALOG: Topic[] = [
         id: "id_protection", name: "ID", items: [
             {
                 "hook": "Updates installiert? Identität geschützt.",
-                "scenario": "Ein Kollege verschiebt Windows-Updates seit Wochen – plötzlich sind seine Bankdaten im Darknet.",
+                "scenario": "Updates bringen nicht nur neue Funktionen, sondern schliessen vor allem gefährliche Sicherheitslücken, die Angreifer ausnutzen können, um an Ihre Daten zu gelangen.",
                 "demand": [
                     {
                         "title": "Ihre digitale Identität",
