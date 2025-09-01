@@ -106,7 +106,128 @@ export const CATALOG: Topic[] = [
             },
         ],
     },
-    { id: "vishing", name: "Vishing (Telefon)", items: [] },
+    {
+        id: "id_protection", name: "ID", items: [
+            {
+                "hook": "Updates installiert? Identität geschützt.",
+                "scenario": "Ein Kollege verschiebt Windows-Updates seit Wochen – plötzlich sind seine Bankdaten im Darknet.",
+                "demand": [
+                    {
+                        "title": "Ihre digitale Identität",
+                        "description": "Gespeicherte Passwörter, Browser-Logins und Zugangsdaten zu allen Ihren Konten. Einmal im System, kopieren Angreifer alles: Banking, E-Mail, soziale Medien. Ihre komplette Online-Identität wird zur Handelsware."
+                    },
+                    {
+                        "title": "Firmenzugang und Geschäftsgeheimnisse",
+                        "description": "VPN-Zugänge, Firmennetzwerk-Credentials und Zugriff auf vertrauliche Dokumente. Angreifer nutzen Ihr Gerät als Einfallstor ins Firmennetzwerk. Der Schaden multipliziert sich über die ganze Organisation."
+                    }
+                ],
+                "actions": [
+                    {
+                        "title": "Update-Fenster wegklicken",
+                        "description": "Sie klicken 'Später erinnern' oder schliessen das Update-Fenster. Die Sicherheitslücke bleibt offen, Angreifer nutzen bekannte Schwachstellen aus. Jeder verschobene Update erhöht das Risiko exponentiell."
+                    },
+                    {
+                        "title": "Automatische Updates deaktivieren",
+                        "description": "Sie schalten Updates aus, weil sie 'nerven' oder 'zur falschen Zeit kommen'. Ihr System wird zur leichten Beute - Hacker scannen gezielt nach ungepatchten Systemen. Diese Nachlässigkeit ist wie das Haustürschloss zu entfernen."
+                    },
+                    {
+                        "title": "Virenschutz-Warnungen ignorieren",
+                        "description": "Sie klicken Sicherheitswarnungen weg ohne zu lesen. Der Virenschutz wird wirkungslos, wenn seine Datenbank veraltet ist. Neue Bedrohungen werden nicht erkannt, alte Schutzmechanismen greifen ins Leere."
+                    }
+                ],
+                "detection": [
+                    {
+                        "title": "Hartnäckige Update-Erinnerungen",
+                        "description": "Windows zeigt täglich oder mehrmals täglich Update-Meldungen. Das System markiert Updates als 'kritisch' oder 'wichtig'. Diese Dringlichkeit hat einen Grund - es geht um aktiv ausgenutzte Sicherheitslücken."
+                    },
+                    {
+                        "title": "Computer wird langsamer",
+                        "description": "Programme starten träge, der Browser reagiert verzögert, unerklärliche Festplattenaktivität. Diese Symptome deuten auf Malware hin, die Ihre Daten durchsucht und kopiert. Veraltete Systeme sind besonders anfällig."
+                    },
+                    {
+                        "title": "Rote Symbole im System-Tray",
+                        "description": "Virenschutz oder Windows-Sicherheit zeigen rote Warnsymbole. Diese visuellen Alarme bedeuten: Ihr Schutz ist kompromittiert. Jede Minute ohne Reaktion erhöht das Risiko eines erfolgreichen Angriffs."
+                    }
+                ],
+                "measures": [
+                    {
+                        "title": "Jetzt automatische Updates aktivieren",
+                        "description": "Einstellungen → Update & Sicherheit → Automatische Updates EIN. Einmal aktiviert, läuft alles im Hintergrund. Wählen Sie Neustart-Zeiten ausserhalb der Arbeitszeit - das System arbeitet nachts für Ihre Sicherheit."
+                    },
+                    {
+                        "title": "Update-Meldung = sofort installieren",
+                        "description": "Sehen Sie ein Update-Fenster? Klicken Sie 'Jetzt installieren', nicht 'Später'. Planen Sie 10 Minuten ein - diese Investment schützt vor tagelangen Wiederherstellungen nach einem Angriff. Keine Ausnahmen, keine Ausreden."
+                    },
+                    {
+                        "title": "Planen Sie einen monatlichen Komplettscan",
+                        "description": "Kalendereintrag: Jeden 1. des Monats vollständige Systemprüfung starten. Lassen Sie den Scan während der Mittagspause laufen. Diese Routine findet Bedrohungen, bevor sie Schaden anrichten können."
+                    }
+                ],
+                "area_tag": "everyone",
+                "badges": ["software", "updates", "identity", "malware"],
+                "language": "de-CH"
+            },
+            {
+                "hook": "Bildschirm gesperrt? Daten sicher.",
+                "scenario": "Eine Mitarbeiterin geht 'nur kurz' zum Drucker – ein Besucher fotografiert ihre offenen Kundendaten.",
+                "demand": [
+                    {
+                        "title": "Offene Sessions und Logins",
+                        "description": "Alle Ihre eingeloggten Dienste stehen offen: E-Mail, Banking, Firmensysteme. In 30 Sekunden kann jemand Mails versenden, Überweisungen tätigen oder Daten kopieren. Ihr digitales Ich ist vollständig zugänglich."
+                    },
+                    {
+                        "title": "Visuelle Informationen",
+                        "description": "Passwörter bei der Eingabe, vertrauliche Dokumente am Bildschirm, private Nachrichten. Schulterblicke im Büro oder Zug reichen aus. Diese Informationen werden für Social Engineering und gezielte Angriffe genutzt."
+                    }
+                ],
+                "actions": [
+                    {
+                        "title": "Arbeitsplatz ungesperrt verlassen",
+                        "description": "'Nur kurz zur Toilette' oder 'gleich zurück' - der Bildschirm bleibt offen. Diese Sekunden reichen für Datendiebstahl, Sabotage oder peinliche Streiche. Die meisten Insider-Angriffe nutzen genau diese Nachlässigkeit."
+                    },
+                    {
+                        "title": "Ohne Sichtschutz in der Öffentlichkeit arbeiten",
+                        "description": "Im Zug, Café oder Grossraumbüro ohne Blickschutzfolie arbeiten. Jeder kann mitlesen: Passwörter, Geschäftszahlen, private Mails. Sie werden zum offenen Buch für neugierige oder böswillige Blicke."
+                    },
+                    {
+                        "title": "Webcam-Abdeckung offen lassen",
+                        "description": "Nach dem Meeting bleibt die Kamera-Abdeckung offen. Malware kann unbemerkt aufzeichnen - private Momente, vertrauliche Gespräche, kompromittierende Situationen. Erpressungsmaterial entsteht ohne Ihr Wissen."
+                    }
+                ],
+                "detection": [
+                    {
+                        "title": "Fremde Personen nähern sich Ihrem Arbeitsplatz",
+                        "description": "Besucher, Reinigungspersonal oder unbekannte 'Kollegen' in Ihrer Nähe. Nicht jeder hat gute Absichten - opportunistische Angreifer nutzen jede Gelegenheit. Ihr offener Bildschirm ist eine Einladung."
+                    },
+                    {
+                        "title": "Ungewöhnliche Blicke auf Ihren Bildschirm",
+                        "description": "Jemand schaut auffällig oft oder lange auf Ihren Monitor. Diese Person merkt sich möglicherweise Ihre Eingaben oder fotografiert heimlich. Vertrauen Sie Ihrem Unbehagen - es hat meist einen Grund."
+                    },
+                    {
+                        "title": "Webcam-LED leuchtet unerwartet",
+                        "description": "Die Kamera-LED geht an, obwohl kein Meeting läuft. Dies könnte ein Zeichen für Malware sein, die Sie ausspioniert. Ohne Abdeckung sind Sie dieser Überwachung schutzlos ausgeliefert."
+                    }
+                ],
+                "measures": [
+                    {
+                        "title": "Windows+L wird zur Reflex-Bewegung",
+                        "description": "Aufstehen = Windows+L (Mac: Ctrl+Cmd+Q). Keine Ausnahmen, auch nicht für '10 Sekunden'. Üben Sie diese Bewegung, bis sie automatisch erfolgt. Diese Sekunde Aufwand verhindert stundenlange Schadensbehebung."
+                    },
+                    {
+                        "title": "Sichtschutzfolie sofort bestellen",
+                        "description": "Investieren Sie CHF 20-30 in eine Blickschutzfolie für Ihren Bildschirm. Einmal angebracht, schützt sie permanent vor neugierigen Blicken. Besonders wichtig: Niemand sieht mehr Ihre Passworteingaben."
+                    },
+                    {
+                        "title": "Kamera-Abdeckung als Meeting-Ende-Ritual",
+                        "description": "Meeting beendet = Kamera zu. Kleben Sie einen Post-it 'KAMERA ZU?' neben die Webcam als Erinnerung. Nach zwei Wochen ist es Gewohnheit. Diese simple Handlung schützt Ihre Privatsphäre komplett."
+                    }
+                ],
+                "area_tag": "everyone",
+                "badges": ["physical", "privacy", "webcam", "screen"],
+                "language": "de-CH"
+            }
+        ]
+    },
     { id: "quishing", name: "QR-Code-Fallen", items: [] },
     { id: "passwords", name: "Passwörter & 2FA", items: [] },
 ];
