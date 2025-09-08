@@ -70,7 +70,9 @@ export default function Controls({
             <span className="text-zinc-600 dark:text-zinc-300">Ansicht</span>
             <select
               value={mode}
-              onChange={(e) => setMode(e.target.value as "full" | "detection" | "measures")}
+              onChange={(e) =>
+                setMode(e.target.value as "full" | "detection" | "measures")
+              }
               className="rounded-xl border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-800 shadow-sm outline-none focus:ring-2 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
             >
               <option value="full">Gesamt</option>
